@@ -1,78 +1,80 @@
 #include <iostream>
-#include <string>
 using namespace std;
 
-struct palabra {
+
+struct palabra
+{
     char letra;
     palabra *sig;
+
 };
 
-bool sw = false;
+int sw=1;
 
-void hallar_dip(palabra *cab);
+int main (){
 
-int main() {
-    string texto;
+palabra *cab, *P, *Q, *R;
+
+
+cab=nullptr;
+
+while (sw == 1) 
+    {
+    palabra *Q = new palabra;
+    cout << "Ingrese una letra en MAYUSCULA: ";
+    cin >> Q->letra;
     
-
+        if (cab == nullptr) 
+        {
     
-        palabra *cab = nullptr;
-        palabra *p = nullptr;
+        cab=Q;
+        P=Q;
 
-        cout << "Ingrese una palabra en MAYUSCULAS: ";
-        cin >> texto;
+        } 
+        else 
+        {
+            P->sig=Q;
+            P=Q;
+        }
+        Q->sig=nullptr;
+        cout << "Desea ingresar otra letra? (1=si, 0=no): ";
+        cin >> sw;
+    }
+    P=cab;
+    sw=0;
 
-        for (size_t i = 0; i < texto.length(); ++i) {
-            palabra *q = new palabra;
-            q->letra = texto[i];
-            q->sig = nullptr;
+    while (P!=nullptr) 
+    {
 
-            if (cab == nullptr) {
-                cab = q;
-                p = q;
-            } else {
-                p->sig = q;
-                p = q;
+        R=P->sig;
+
+        if (P->letra=='A'||P->letra=='E'||P->letra=='I'||P->letra=='O'||P->letra=='U')
+        {
+            if (R != nullptr &&
+                (R->letra=='A'||R->letra=='E'||R->letra=='I'||R->letra=='O'||R->letra=='U'))
+            {
+                sw=1;
             }
         }
-
-        hallar_dip(cab);
-
-        if (sw) {
-            cout << "SI HAY DIPTONGO" << endl;
-        } else {
-            cout << "NO HAY DIPTONGO" << endl;
-        }
-
         
+        P=P->sig;
     }
 
-
-void hallar_dip(palabra *cab) {
-    palabra *q, *r;
-
-    if (cab == nullptr)
-        cout << "No hay palabras en la lista";
-    else {
-        if (cab->sig == nullptr) {
-            cout << "error palabra de una sola letra\n";
-        } else {
-            sw = false;
-            q = cab;
-            r = q->sig;
-
-            while (r != nullptr && sw == false) {
-                if (
-                    (q->letra == 'A' || q->letra == 'E' || q->letra == 'I' ||q->letra == 'O' || q->letra == 'U')
-                    &&
-                    (r->letra == 'A' || r->letra == 'E' || r->letra == 'I' ||r->letra == 'O' || r->letra == 'U')
-                ) {
-                    sw = true;
-                } else {
-                    q = q->sig;
-                    r = r->sig;
-                } // finsi
-            } // finwhile
-        } // finsi
-    } // finsi
+    if (sw == 0) 
+    {
+        
+        cout << "NO HAY DIPTONGO" << endl;
+    } 
+    else 
+    {
+        P=cab;
+        cout << "cab-> ";
+        while (P!=nullptr) 
+        {
+            cout << P->letra <<" -> ";
+            P=P->sig;
+        }
+        cout << "SI HAY DIPTONGO" << endl;
+    }
+    
 }
